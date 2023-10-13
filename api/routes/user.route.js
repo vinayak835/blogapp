@@ -1,10 +1,11 @@
 import express from 'express'
 import bcryptjs from 'bcryptjs'
+import verifytoken from '../verifytoken.js'
 const router=express.Router()
 import User from '../models/user.model.js'
 import Post from '../models/post.model.js'
 import Comment from '../models/comment.model.js'
-router.post("/:id",async(req,res,next)=>{
+router.post("/:id",verifytoken,async(req,res,next)=>{
     try{
         if(req.body.password){
             req.body.password=bcryptjs.hashSync(req.body.password,10)
@@ -17,7 +18,7 @@ router.post("/:id",async(req,res,next)=>{
         next(error)
     }
 })
-router.delete("/:id",async(req,res,next)=>{
+router.delete("/:id",verifytoken,async(req,res,next)=>{
     try{
        await User.findByIdAndDelete(req.params.id)
        await Post.deleteMany({userId:req.params.id})

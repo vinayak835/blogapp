@@ -1,9 +1,11 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser'
 import authRouter from './routes/auth.route.js'
 import userRouter from './routes/user.route.js'
 import postRouter from './routes/post.route.js'
+import commentRouter from './routes/comment.route.js'
 dotenv.config()
 const app=express()
 app.use(express.json())
@@ -20,9 +22,11 @@ app.listen(process.env.PORT,()=>{
     Dbconnect()
     console.log('srver is running on '+process.env.PORT)
 })
+app.use(cookieParser())
 app.use('/api/auth',authRouter)
 app.use('/api/users',userRouter)
 app.use('/api/posts',postRouter)
+app.use('/api/comments',commentRouter)
 app.use((err,req,res,next)=>{
     const statusCode=err.statusCode||500;
     const message=err.message||"server not found";

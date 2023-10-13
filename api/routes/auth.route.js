@@ -33,7 +33,7 @@ router.post('/sign-in',async(req,res,next)=>{
    }
    const{password:pass,...info}=validuser._doc
    const token=jwt.sign({id:validuser._id},process.env.JWT_SECRET,{expiresIn:"3d"})
-   res.cookie('acess-token',token).status(200).json(info)
+   res.cookie('token',token).status(200).json(info)
   }
   catch(error){
     next(error)
@@ -41,7 +41,7 @@ router.post('/sign-in',async(req,res,next)=>{
 })
 router.post('/logout',async(req,res,next)=>{
   try{
-  res.clearCookie('acess-token',{sameSite:'none',secure:true}).status(200).send('user logged out successfully')
+  res.clearCookie('token',{sameSite:'none',secure:true}).status(200).send('user logged out successfully')
   }
   catch(error){
     next(error)
