@@ -6,9 +6,11 @@ import authRouter from './routes/auth.route.js'
 import userRouter from './routes/user.route.js'
 import postRouter from './routes/post.route.js'
 import commentRouter from './routes/comment.route.js'
+import cors from'cors'
 dotenv.config()
 const app=express()
 app.use(express.json())
+app.use(cors({origin:"http://localhost:5173",credentials:true}))
 const Dbconnect=async()=>{
 try{
      await mongoose.connect(process.env.MONGO)

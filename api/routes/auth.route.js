@@ -12,7 +12,7 @@ router.post('/sign-up',async(req,res,next)=>{
       const hashedpassword=bcryptjs.hashSync(password,10)
       const newUser=new User({username,email,password:hashedpassword})
       await newUser.save()
-      res.status(201).json('user created sucessfully')
+       res.status(201).json(newUser)
     }
     catch(error){
     next(error)
