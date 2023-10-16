@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {Link,useLocation} from 'react-router-dom'
 import {BsSearch,BsPencil} from  'react-icons/bs'
 import {AiOutlineMenuFold} from 'react-icons/ai'
 import Menu from '../component/Menu'
+import { UserContext } from '../context/UserContext'
 
 export default function Header() {
-  const user=true
+  const {user}=useContext(UserContext)
+  
   const[menu,setmenu]=useState(false)
   const location=useLocation()
   const showmenu=()=>{

@@ -32,7 +32,7 @@ router.post('/sign-in',async(req,res,next)=>{
     return
    }
    const{password:pass,...info}=validuser._doc
-   const token=jwt.sign({id:validuser._id},process.env.JWT_SECRET,{expiresIn:"3d"})
+   const token=jwt.sign({id:validuser._id,username:validuser.username,email:validuser.email},process.env.JWT_SECRET,{expiresIn:"3d"})
    res.cookie('token',token).status(200).json(info)
   }
   catch(error){
@@ -47,5 +47,14 @@ router.post('/logout',async(req,res,next)=>{
     next(error)
   }
 })
-
+//refetch user
+router.get('/refetch',(req,res)=>{
+  const token=req.cookies.token
+  jwt.verify(token,process.env.JWT_SECRET,{},async(err,data)=>{
+    if(err){
+      return res.status(404).json(err)
+    }
+    res.status(200).json(data)
+  })
+})
 export default router

@@ -1,21 +1,24 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import {URL} from '../url.js'
+import { UserContext } from '../context/UserContext.jsx'
 
 export default function SignIn() {
   const [email,setemail]=useState("")
   const [password,setpassword]=useState("")
   const [error,seterror]=useState("")
+  const {setuser}=useContext(UserContext)
   const navigate=useNavigate()
   const handlesumbit=async(e)=>{
     e.preventDefault()
     try{
-      const res=await axios.post(URL+"/api/auth/sign-in",{email,password})
+      const res=await axios.post(URL+"/api/auth/sign-in",{email,password},{withCredentials:true})
       // console.log(res)
       seterror(null)
       setemail(res.data.email)
       setpassword(res.data.password)
+      setuser(res.data)
       navigate('/')
     }
     catch(error){

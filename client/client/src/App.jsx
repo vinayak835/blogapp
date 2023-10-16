@@ -10,8 +10,10 @@ import PostDetail from './pages/PostDetail'
 import CreatePost from './pages/CreatePost'
 import EditPost from './pages/EditPost'
 import Profile from './pages/Profile'
+import { UserContextProvider } from './context/UserContext'
 export default function App() {
   return (
+    <UserContextProvider>
   <BrowserRouter>
   <Header />
   <Routes>
@@ -26,5 +28,6 @@ export default function App() {
   </Routes>
   <Footer/>
   </BrowserRouter>
+  </UserContextProvider>
   )
 }
